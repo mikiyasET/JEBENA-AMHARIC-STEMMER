@@ -1,3 +1,5 @@
+import {common_amh_abbr_list} from "../constants/abbr";
+
 const {stop_word_list} = require("../constants/stopwords");
 const {punctuation_list} = require("../constants/punctuation");
 const fs = require("fs");
@@ -12,7 +14,7 @@ export class core {
     // ]
     public swapEng(query: string) {
         // roor dir >> constants >> fidel.json
-        const fidels = JSON.parse(fs.readFileSync(path.join(__dirname, "../../constants/fidel.json"), "utf8"));
+        const fidels = JSON.parse(fs.readFileSync(path.join(__dirname, "../constants/fidel.json"), "utf8"));
         const words = query.split(" ");
         const result = words.map((word) => {
             const char = word.split("");
@@ -30,7 +32,7 @@ export class core {
     }
     public swapAmh(query: string) {
         // roor dir >> constants >> fidel.json
-        const fidels = JSON.parse(fs.readFileSync(path.join(__dirname, "../../constants/fidel.json"), "utf8"));
+        const fidels = JSON.parse(fs.readFileSync(path.join(__dirname, "../constants/fidel.json"), "utf8"));
         const words = query.split(" ");
         const result = words.map((word) => {
             const char = word.split("$$$");
@@ -51,14 +53,12 @@ export class core {
     }
 
     public main(query: string) {
-        query = this.punctuationRemover(query);
-        const queries: string[] = this.stopWordRemover(query);
+        const queries: string[] = this.lexicalAnalyzer(this.rmStopWord(query)).split(" ");
         const qs = queries.map((q: string) => {
             const table = this.searchTable(q);
             if (table) {
-               return table;
-            }
-            else{
+                return table;
+            } else {
                 const english = this.remover(this.swapEng(q));
                 const amharic = this.swapAmh(english);
 
@@ -71,7 +71,7 @@ export class core {
         })
         return qs.join(" ");
     }
-    public punctuationRemover(query: string) : string {
+    public rmPunctuation(query: string) : string {
         const chars = query.split("");
         let result = chars.map((char) => {
             if (!punctuation_list.includes(char)) {
@@ -80,7 +80,7 @@ export class core {
         });
         return result.join("");
     }
-    public stopWordRemover(query: string) : string[] {
+    public rmStopWord(query: string) {
         const words = query.split(" ");
         let result = words.map((word) => {
             if (!stop_word_list.includes(word)) {
@@ -88,8 +88,7 @@ export class core {
             }
         });
         result = result.filter(e => e != undefined)
-        console.log("Removed: ", result)
-        return result as string[];
+        return result.join(" ");
     }
     public remover(query: string) {
         const suffixRemoved = this.removeSuffix(query);
@@ -98,7 +97,7 @@ export class core {
         return prefixRemoved.replace(/\s\s+/g, ' ');
     }
     public searchTable(query: string) {
-        const fidel = JSON.parse(fs.readFileSync(path.join(__dirname, "../../constants/dic.json"), "utf8"));
+        const fidel = JSON.parse(fs.readFileSync(path.join(__dirname, "../constants/dic.json"), "utf8"));
         if (fidel[query]) {
             return fidel[query];
         }
@@ -109,9 +108,7 @@ export class core {
         if (query.replace('$$$','').length >= 5) {
             for (const prefix in removePrefixes) {
                 if (query.trim().startsWith(removePrefixes[prefix])) {
-                    console.log("Found: ", removePrefixes[prefix] , " in ", query)
                     query = query.substring(removePrefixes[prefix].length)
-                    console.log("Changed: ", query)
                     break;
                 }
             }
@@ -132,5 +129,57 @@ export class core {
         })
         result = result.filter(e => e)
         return result.join(" ");
+    }
+
+    public lexicalAnalyzer(query: string) {
+        for (const abbr in common_amh_abbr_list) {
+            if (query.includes(abbr)) {
+                query = query.replace(abbr, common_amh_abbr_list[abbr])
+            }
+        }
+        query = this.rmPunctuation(query)
+
+        return query;
+    }
+    public indexer() {
+        try {
+            console.log("Indexing started ...")
+            const dirPath = path.join(__dirname, "../documents");
+            const outPath = path.join(__dirname, "../indexed");
+            fs.readdir(dirPath, (err: any, files:any) => {
+                if (!err) {
+                    const fileSize = files.length;
+                    let counter = 0;
+                    for (const file of files) {
+                        const filePath = path.join(dirPath, file);
+                        fs.readFile(filePath, "utf8", async (err: any, data: any) => {
+                            if (!err) {
+                                const result = await this.main(data);
+                                counter++;
+                                const percent = (counter / fileSize) * 100;
+                                console.log("Indexing done for file: ", file)
+                                console.log("Indexing progress: ", percent.toFixed(2), "%")
+                                await fs.writeFileSync(path.join(outPath, file), result,
+                                    // callback function that is called after writing file is done
+                                    function (err: any) {
+                                        if (err) throw err;
+                                        // if no error
+                                        console.log("Data is written to file successfully.")
+                                    });
+                            } else {
+                                console.log(err)
+                                return err;
+                            }
+                        })
+                    }
+                }else {
+                    console.log(err)
+                    return err;
+                }
+            });
+        } catch (error) {
+            console.log("Error: ", error)
+            return error;
+        }
     }
 }

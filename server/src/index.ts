@@ -13,6 +13,10 @@ app.get('/swap/:word', (req:Request, res:Response) => {
     res.send(c.main(word));
 });
 
+app.get('/index', (req:Request, res:Response) => {
+    const c = new core();
+    res.send(c.indexer())
+});
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });

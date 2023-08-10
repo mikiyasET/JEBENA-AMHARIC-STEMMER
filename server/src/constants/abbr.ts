@@ -1,4 +1,4 @@
-export const common_amh_abbr_list = {
+export const common_amh_abbr_list: any = {
     "ት/ቤት": "ትምህርት ቤት",
     "ት/ርት": "ትምህርት",
     "ት/ክፍል": "ትምህርት ክፍል",
