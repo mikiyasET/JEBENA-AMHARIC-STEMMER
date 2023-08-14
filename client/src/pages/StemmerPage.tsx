@@ -5,11 +5,15 @@ const StemmerPage = () => {
     const stemmer = useSelector((state: any) => state.stemmer)
     const dispatch = useDispatch<any>()
     const handleStemmer = async () => {
-        dispatch(setStemmerResults(''))
-        const response = await fetch(`http://localhost:3000/stemmer/${stemmer.query}`);
-        const data = await response.text();
-        dispatch(setStemmerResults(data))
-        dispatch(setStemmerResults(data))
+        if (stemmer.query.trim().length > 0) {
+            dispatch(setStemmerResults(''))
+            const response = await fetch(`http://localhost:3000/stemmer/${stemmer.query}`);
+            const data = await response.text();
+            dispatch(setStemmerResults(data))
+            dispatch(setStemmerResults(data))
+        } else {
+            alert("Query empty!!!");
+        }
     }
 
     return (

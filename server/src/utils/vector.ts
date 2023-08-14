@@ -58,12 +58,9 @@ export class Vector {
 
     public IDF() {
         const documentsLength = this.documentsWords.length;
-        // const dfi = this.DF().reduce((a, b) => a + b, 0);
-        // const ddfi = documentsLength / dfi;
         const ddfi = this.DF().map((df) => {
             return documentsLength / df;
         })
-        // idf = log10(ddfi)
         const idf = ddfi.map((ddfi) => {
             return Math.log(ddfi) / Math.log(10);
         });
@@ -78,11 +75,6 @@ export class Vector {
                 return t.map((tt) => {
                     return tt * idf[i];
                 });
-
-                // return {[this.allWords[i]]: t.map((tt) => {
-                //         return tt * idf[i];
-                //     })
-                // };
             });
             resolve(result);
         });

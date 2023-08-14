@@ -82,44 +82,6 @@ const ResultPage = () => {
                             </span>
                                             )
                                         ))}
-                                        {/*{contentWords.map((word: string, wordIndex: number, arr: string[]) => {*/}
-                                        {/*    const isQuery = word === search.query;*/}
-                                        {/*    if (isQuery) {*/}
-                                        {/*        const startIndex = Math.max(wordIndex - maxContextWords, 0);*/}
-                                        {/*        const endIndex = Math.min(wordIndex + maxContextWords + 1, arr.length);*/}
-                                        {/*        const context = arr.slice(startIndex, endIndex);*/}
-                                        {/*        const q: any[] = search.query.split(" ")*/}
-                                        {/*        if (q.join(" ").includes(word)) {*/}
-                                        {/*            return (*/}
-                                        {/*                <span key={`${wordIndex}`} className="highlight">*/}
-                                        {/*                        {word + ' '}*/}
-                                        {/*                    </span>*/}
-                                        {/*            );*/}
-                                        {/*        } else {*/}
-                                        {/*            return context.map((word: string, index: number) => {*/}
-                                        {/*                console.log(word + " --- ")*/}
-                                        {/*                if (q.includes(word)) {*/}
-                                        {/*                    return (*/}
-                                        {/*                        <span key={`${wordIndex}:${index}`}*/}
-                                        {/*                              className="highlight">*/}
-                                        {/*                        {word + ' '}*/}
-                                        {/*                    </span>*/}
-                                        {/*                    );*/}
-                                        {/*                } else {*/}
-                                        {/*                    return (*/}
-                                        {/*                        <span key={`${wordIndex}:${index}`}>*/}
-                                        {/*                        {word + ' '}*/}
-                                        {/*                    </span>*/}
-                                        {/*                    );*/}
-                                        {/*                }*/}
-                                        {/*            })*/}
-                                        {/*        }*/}
-                                        {/*    } else {*/}
-                                        {/*        return (*/}
-                                        {/*            <></>*/}
-                                        {/*        );*/}
-                                        {/*    }*/}
-                                        {/*})}*/}
                                     </p>
                                 </div>
                             </div>

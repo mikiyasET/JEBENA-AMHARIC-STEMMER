@@ -160,7 +160,6 @@ export class core {
 
     public removeInfix(query: string) {
         // @ts-ignore
-
         if (/.+([^aeiou])[aeiou]\1[aeiou].?/i.test(query.replaceAll("$$$", "")) || /^(.+)a\1$/i.test(query.replaceAll("$$$", ""))) {
             // @ts-ignore
             query = query.replaceAll("$$$", "")
@@ -169,7 +168,8 @@ export class core {
                     /\S\S[^aeiou][aeiou]/i,
                     query[0] + query[1]
                 )
-            } else if (/^(.+)a\1$/i.test(query)) {
+            }
+            else if (/^(.+)a\1$/i.test(query)) {
                 query = query.replace(/a.+/i, "")
             }
             if (/[bcdfghjklmnpqrstvwxyz]{2}e/i.test(query)) {
