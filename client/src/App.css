@@ -1,42 +1,126 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.searchBar {
+    background-color: #ffffff;
+    color: #83879A;
+    caret-color: #4B92E8;
+    /*padding: 20px 30px;*/
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);*/
+    /* blue color #4B92E8 */
+}
+.standard-padding {
+    padding: 0px 50px;
+}
+.searchBar-padding {
+    padding: 20px 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.searchBar:focus {
+    box-shadow: none;
+    outline: none;
+    background-color: #f5f5f9;
+    transition: all 0.3s ease-in-out;
+}
+
+.searchBar-container {
+    margin-top: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 10%;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #83879A;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 20px;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+    color: #83879A;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.searchBar {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+#searchQueryInput {
+    width: 100%;
+    height: 3rem;
+    background: #f5f5f5;
+    outline: none;
+    border: none;
+    border-radius: 1.625rem;
+    padding: 0 3.5rem 0 1.5rem;
+    font-size: 1rem;
 }
 
-.card {
-  padding: 2em;
+#searchQuerySubmit {
+    width: 3.5rem;
+    height: 3rem;
+    margin-left: -3.5rem;
+    background: none;
+    border: none;
+    outline: none;
 }
 
-.read-the-docs {
-  color: #888;
+#searchQuerySubmit:hover {
+    cursor: pointer;
+}
+
+.wd-100 {
+    width: 100%;
+}
+
+.resultPage-result {
+    padding: 10px 20px;
+    width: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    /*box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);*/
+}
+.resultPage-result:hover {
+    background-color: #f5f5f9;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+.resultPage-result-title {
+    font-size: 12px;
+    color: #636675;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.resultPage-result-content {
+    font-size: 13px;
+    color: #83879A;
+    margin-top: 10px;
+}
+.highlight {
+    color: #4B92E8;
+    font-weight: bold;
+}
+.activeLink {
+    color: #4B92E8 !important;
 }
