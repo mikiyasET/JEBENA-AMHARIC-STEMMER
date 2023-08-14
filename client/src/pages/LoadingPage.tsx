@@ -35,7 +35,11 @@ const LoadingPage = () => {
                         </svg>
                     </button>
                 </div>
-                <div></div>
+
+                <div className="nav-links">
+                    <a href="/" className="activeLink">Home</a>
+                    <a href="/stemmer/">Stemmer</a>
+                </div>
             </nav>
 
             <main className="resultPage-container standard-padding ">
